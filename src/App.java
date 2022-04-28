@@ -1,4 +1,7 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -54,7 +57,24 @@ public class App {
         }
     }
 
-    // create contains in array string
+    public static void excluirDisciplinas(String nome) throws IOException {
+
+        var dadosArquivo = FileReaderWrite.carregarArquivo("Disciplinas.txt");
+
+        var texto = FileReaderWrite.textoParaVetor(dadosArquivo, ";");
+        List<String> arrayNewText = new ArrayList<String>();
+        for (int i = 0; i < texto.length; i++) {
+            var vetorString = FileReaderWrite.textoParaVetor(texto[i], ",");
+
+            if (vetorString.length == 3 && !contains(vetorString, " ") || !contains(vetorString, "")) {
+                if (!vetorString[1].equalsIgnoreCase(nome)) {
+                    arrayNewText.add(texto[i]+";\n");
+                }
+            }
+        }
+        FileReaderWrite.sobreEscreverArquivoApartirDeUmaLista("Disciplinas.txt", arrayNewText);
+    }
+
     public static boolean contains(String[] array, String value) {
         for (String element : array) {
             if (element.equals(value)) {
@@ -89,10 +109,12 @@ public class App {
                     System.out.println("Digite a posicao da disciplina: ");
                     Scanner scanner = new Scanner(System.in);
                     String nome = scanner.nextLine();
-                    // int posicao = scanner.nextInt();
-                    // lista.exclui(posicao);
-                    lista.removeItem(nome);
-                    System.out.println("Disciplina excluida com sucesso!");
+                    if(lista.removeItem(nome)){
+                        excluirDisciplinas(nome);
+                        System.out.println("Disciplina excluida com sucesso!");
+                    }else{
+                        System.out.println("Disciplina não encontrada!");
+                    }
                     menu();
                     break;
                 }

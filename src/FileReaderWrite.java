@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class FileReaderWrite {
 
@@ -58,6 +59,19 @@ public class FileReaderWrite {
 
         BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivo));
         escritor.append(texto);
+        escritor.close();
+    }
+
+    public static void sobreEscreverArquivoApartirDeUmaLista(String arquivo, List<String> textos) throws IOException {
+
+        StringBuilder builder = new StringBuilder("");
+
+        for(String texto : textos) {
+            builder.append(texto);
+        }     
+
+        BufferedWriter escritor = new BufferedWriter(new FileWriter(arquivo));
+        escritor.append( builder.toString());
         escritor.close();
     }
 }

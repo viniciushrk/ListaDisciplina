@@ -1,5 +1,0 @@
-1;Sistema de Informacao
-2;Engenharia de Computacao
-3;Contabilidade
-4;Administracao
-5;Direito

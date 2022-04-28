@@ -168,32 +168,24 @@ public class ListaLigada<T> {
     }
 
     // remove item(string nome)
-    public void removeItem(String nomeremover) {
-        No remove = primeiro.getProximo();
-        No sentinela = primeiro;
-        if (primeiro != null) {
-            while (remove != null) {
-                if (remove.getDado() instanceof Disciplina) {
-                    Disciplina aux = (Disciplina) remove.getDado();
-
-                    if (aux.getNome().equalsIgnoreCase(nomeremover)) {
-                        if (remove.getProximo() == null) {
-                            ultimo = sentinela;
-                            ultimo.setProximo(null);
-                            remove = null;
-                            break;
-                        } else {
-                            sentinela.setProximo(remove.getProximo());
-                            remove.setProximo(null);
-                            remove = null;
-                            break;
-                        }
-                    }
-
+    public boolean removeItem(String nomeremover) {
+        No<T> atual = this.primeiro;
+        var tamanhoInicial = this.getTamanho();
+        int posicao = 0;
+        while (atual != null) {
+            if (atual.getDado() instanceof Disciplina) {
+                Disciplina aux = (Disciplina) atual.getDado();
+                if (aux.getNome().equalsIgnoreCase(nomeremover)) {
+                    exclui(posicao);   
                 }
-                remove = remove.getProximo();
-                sentinela = sentinela.getProximo();
             }
+            atual = atual.getProximo();
+            posicao++;
+        }
+        if(tamanhoInicial == getTamanho()){
+            return false;
+        }else{
+            return true;
         }
     }
 }
